@@ -1456,7 +1456,28 @@ flutter devices
 | 15 | เทียบค่า `MediaQuery.size.width` กับ `constraints.maxWidth` (ตาม Checkpoint 4.1) | บันทึกค่าที่สังเกตได้และสรุปความแตกต่าง | ✅ |
 
 ---
+```
+1. ค่าที่สังเกตได้
+- เมื่อรันแบบเต็มหน้าจอ (No Padding / Unconstrained Parent)
+  - MediaQuery screenWidth 412.0 px
+  - LayoutBuilder maxWidth 412.0 px
+ ค่าทั้งสองตัวจะ "เท่ากัน" เมื่อ Widget นั้นขยายพื้นที่เต็มความกว้างของหน้าจอ
 
+- เมื่อวาง Widget อยู่ใน Container ที่มี Padding / Margin / Sidebar 
+  - MediaQuery screenWidth 412.0 px
+  - LayoutBuilder maxWidth 380.0 px
+ค่าทั้งสองตัวจะ "ไม่เท่ากัน" โดย constraints.maxWidth จะมีค่าน้อยกว่าเสมอ
+
+================================================================================
+2. สรุปความแตกต่าง (Summary of Differences)
+================================================================================
+1. MediaQuery.of(context).size.width
+   - คือ ความกว้างรวม "ทั้งหน้าจอ" ของเครื่อง/แอปพลิเคชัน (Screen Width)
+   - ค่าที่ได้:คงที่ตามขนาดหน้าจออุปกรณ์เสมอ ไม่ว่าจะถูกวางไว้ใน Widget ตัวไหน
+2. LayoutBuilder constraints.maxWidth
+   - คือ ความกว้างสูงสุดที่ "Widget นั้นได้รับจริงจาก Parent" (Available Component Width)
+   - ค่าที่ได้ เปลี่ยนไปตามพื้นที่จริง (หาก Parent มี Padding/Sidebar ค่าจะน้อยกว่าหน้าจอ)
+```
 > 📝 **วิธีทดสอบข้อ 10 ตาม Device ที่ใช้ (ไม่มี Android Studio):**
 > - **Chrome:** ปรับขนาดหน้าต่าง Browser ให้แคบ/กว้างขึ้น หรือเปิด DevTools (`F12`) แล้วใช้ Device Toolbar (`Ctrl+Shift+M`) จำลองขนาดจอต่าง ๆ
 > - **Android Emulator (จาก `avdmanager`):** กด `Ctrl+ลูกศรซ้าย` หรือ `Ctrl+ลูกศรขวา` เพื่อหมุนจอ
