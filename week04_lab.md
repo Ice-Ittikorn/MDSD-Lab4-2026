@@ -1468,13 +1468,11 @@ flutter devices
   - LayoutBuilder maxWidth 380.0 px
 ค่าทั้งสองตัวจะ "ไม่เท่ากัน" โดย constraints.maxWidth จะมีค่าน้อยกว่าเสมอ
 
-================================================================================
-2. สรุปความแตกต่าง (Summary of Differences)
-================================================================================
-1. MediaQuery.of(context).size.width
+2. ความแตกต่าง
+- MediaQuery.of(context).size.width
    - คือ ความกว้างรวม "ทั้งหน้าจอ" ของเครื่อง/แอปพลิเคชัน (Screen Width)
    - ค่าที่ได้:คงที่ตามขนาดหน้าจออุปกรณ์เสมอ ไม่ว่าจะถูกวางไว้ใน Widget ตัวไหน
-2. LayoutBuilder constraints.maxWidth
+- LayoutBuilder constraints.maxWidth
    - คือ ความกว้างสูงสุดที่ "Widget นั้นได้รับจริงจาก Parent" (Available Component Width)
    - ค่าที่ได้ เปลี่ยนไปตามพื้นที่จริง (หาก Parent มี Padding/Sidebar ค่าจะน้อยกว่าหน้าจอ)
 ```
