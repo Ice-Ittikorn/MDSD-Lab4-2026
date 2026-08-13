@@ -1558,11 +1558,9 @@ GoRoute(
 **โจทย์:** ปัจจุบันหน้า "บันทึกไว้" (`SavedScreen`) เป็นแค่ Static UI ที่ไม่มีข้อมูลจริง ให้ทำการเขียนโค้ดเพื่อทำให้ฟีเจอร์นี้ **ใช้งานได้จริง** ตามข้อกำหนดต่อไปนี้:
 
 1. **เพิ่มปุ่มบันทึก :** เพิ่ม Icon รูปหัวใจบน `DestinationCard` หรือ `DestinationDetailScreen` (เลือกจุดใดจุดหนึ่งหรือทั้งสองจุด) ให้กดแล้วสลับสถานะ "บันทึกแล้ว / ยังไม่บันทึก" ได้ โดยไอคอนต้องเปลี่ยนรูปตามสถานะ (เช่น `Icons.favorite` ↔ `Icons.favorite_border`)
-git commit SHA ที่ 95bacdd71a2e3d48a9b5002bfcd72a70cd4037cf
+
 <img width="768" height="764" alt="image" src="https://github.com/user-attachments/assets/ed813a24-0593-4741-8fb3-4672d770b9d8" />
 <img width="1088" height="414" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 21 36 24" src="https://github.com/user-attachments/assets/39761d08-b333-4009-bf4f-ad13d1fde0e7" />
-
-
 
 
 2. **จัดการ State ที่ใช้ร่วมกันข้ามหน้า:** ข้อมูลว่า Destination ไหนถูกบันทึกไว้บ้าง ต้องเข้าถึงได้จากทั้ง Explore Screen, Detail Screen และ Saved Screen พร้อมกัน (คำใบ้: ลองสร้าง Class ง่าย ๆ เก็บ `Set<String> savedIds` ไว้เป็นตัวแปร Global หรือส่งผ่าน Constructor — ยังไม่ต้องใช้ State Management Library ใด ๆ ในระดับนี้)
@@ -1570,6 +1568,7 @@ git commit SHA ที่ 95bacdd71a2e3d48a9b5002bfcd72a70cd4037cf
 <img width="1186" height="570" alt="image" src="https://github.com/user-attachments/assets/b8f3446f-c678-4242-8334-8db6dde3777d" />
 <img width="1234" height="624" alt="image" src="https://github.com/user-attachments/assets/2ff8638b-e2f5-4989-a42f-631b6dedaf29" />
 <img width="1173" height="440" alt="image" src="https://github.com/user-attachments/assets/774a8425-6aef-4d83-b477-b4a9e0ef9e66" />
+
 3. **แสดงผลใน Saved Screen (Objective 1 & 2):** ให้ `SavedScreen` แสดงรายการ Destination ที่ถูกบันทึกไว้จริง โดยใช้ `GridView` หรือ `ListView` (เลือกอย่างใดอย่างหนึ่ง) และต้องปรับจำนวนคอลัมน์/Layout ตามขนาดหน้าจอด้วย `LayoutBuilder` เหมือนที่ทำใน Explore Screen — ถ้ายังไม่มีรายการที่บันทึกไว้ ให้แสดง Empty State เหมือนเดิม
 
 4. **Navigation (Objective 3 & 4):** กดที่ Card ใน Saved Screen แล้วต้องไปหน้า Detail ได้ถูกต้อง โดยใช้ `context.pushNamed('destination-detail', ...)` แบบเดียวกับหน้าอื่น ๆ
