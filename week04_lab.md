@@ -486,6 +486,7 @@ class DestinationCard extends StatelessWidget {
 บันทึกรูปผลการทดลอง
 <img width="1021" height="326" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 19 52 08" src="https://github.com/user-attachments/assets/d32cdf6e-6e5e-4262-985a-1bca5dd6ede8" />
 <img width="684" height="278" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 19 52 29" src="https://github.com/user-attachments/assets/d4bcfda5-9176-44f7-b23a-8100fb328a6b" />
+<img width="703" height="679" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 20 41 14" src="https://github.com/user-attachments/assets/bb6eea32-b316-436a-9000-b742aad45303" />
 
 ---
 
@@ -642,6 +643,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
 บันทึกรูปผลการทดลอง
 <img width="1060" height="319" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 19 57 41" src="https://github.com/user-attachments/assets/2bafeb5c-6b34-4eab-aca2-ad0321ca700a" />
 <img width="756" height="205" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 19 58 37" src="https://github.com/user-attachments/assets/28636187-e787-4a8a-8909-5475089bdba9" />
+<img width="961" height="602" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 20 42 41" src="https://github.com/user-attachments/assets/075b4962-da5c-4c98-ba6e-763154f0cc93" />
 
 #### ขั้นตอนที่ 4.2 — Destination Detail Screen
 
@@ -1104,6 +1106,7 @@ class _StatCard extends StatelessWidget {
 บันทึกรูปผลการทดลอง
 <img width="591" height="246" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 20 04 39" src="https://github.com/user-attachments/assets/054c34e9-291f-4cd9-bae2-da891c43aea8" />
 <img width="1119" height="670" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 20 06 07" src="https://github.com/user-attachments/assets/0921cb1f-772d-47d8-857e-fd0284c0b443" />
+<img width="958" height="555" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 20 44 39" src="https://github.com/user-attachments/assets/f805cc83-2951-42aa-8c13-2443e6eebf0c" />
 
 
 สร้างไฟล์ `lib/screens/saved_screen.dart`:
