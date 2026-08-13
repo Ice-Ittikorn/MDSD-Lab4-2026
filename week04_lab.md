@@ -1579,25 +1579,87 @@ GoRoute(
 
 **ตอบคำถามต่อไปนี้:**
 
-1. `LayoutBuilder` ต่างกับ `MediaQuery` อย่างไร? มีหลักการเลือกใช้แต่ละแบบในสถานการณ์ใด?
+1. LayoutBuilder ต่างกับ MediaQuery อย่างไร? มีหลักการเลือกใช้แต่ละแบบในสถานการณ์ใด?
 ```text
-
+ความเเตกต่าง
+- MediaQuery
+  - อ่านค่าจาก "ขอบเขตระดับหน้าจอทั้งหมด" (Global / Screen-level / Window-level)
+  - ส่งคืนขนาดความกว้าง-ความสูงรวมของอุปกรณ์/หน้าต่างเบราว์เซอร์ ไม่ว่า Widget นั้นจะถูกวางไว้ลึกแค่ไหนใน Widget Tree
+  - ควรเลือกใช้ MediaQuery เมื่อ
+    - ต้องการปรับการแสดงผลตามประเภทอุปกรณ์ (Window Size Class / Orientation)
+    - ต้องการค่าปลอดภัยของหน้าจอ (SafeArea / View Insets / View Padding)
+    - ต้องการตั้งค่าฟอนต์หรือสเกลรวมทั้งแอป (Text Scale Factor / System Theme)
+- LayoutBuilder
+  - อ่านค่าจาก "ขอบเขตพื้นที่ที่ได้รับจาก Parent Widget" (Local / Parent-level / Component-level)
+  - ส่งคืนค่า `BoxConstraints` (maxWidth, maxHeight, minWidth, minHeight) ที่ Parent อนุญาตให้ Widget นั้นใช้ขยายตัว
+  - ควรเลือกใช้ LayoutBuilder เมื่อ
+    - ทำการสร้าง Component แบบใช้ซ้ำ (Reusable Component / Responsive Card)
+    - ต้องการคำนวณ Layout จากพื้นที่จริงที่ Parent จัดสรรให้
+    - ป้องกันปัญหา Layout Overflow ภายใน Container ย่อย
 ```
 2. ทำไม Go Router ถึงใช้ `StatefulShellRoute` แทน `ShellRoute` ธรรมดา? ผลต่างเรื่อง State Management คืออะไร?
 ```text
+  ShellRoute ธรรมดาทำงานแบบ Single Navigator — เมื่อผู้ใช้เปลี่ยนหน้าใต้ Shell เดียวกัน Flutter จะสร้าง Widget Subtree ของหน้าปลายทางขึ้นมาใหม่ทุกครั้ง และทำลาย Widget ของหน้าก่อนหน้าทิ้งไป ทำให้ ตำแหน่ง Scroll ของ ListView/GridView รีเซ็ตกลับไปบนสุด ค่าที่กรอกใน TextField (เช่น คำค้นหาใน Explore Screen) หายไป Navigation Stack ย่อยของแต่ละ Tab ถูกล้างทุกครั้งที่สลับ Tab กลับมา
 
+  StatefulShellRoute.indexedStack แก้ปัญหานี้ด้วยการสร้าง Navigator แยกอิสระให้แต่ละ Branch  แล้วใช้ IndexedStack ซ้อนทุก Branch ไว้พร้อมกันในหน่วยความจำ โดยแสดงเฉพาะ Branch ที่ Active อยู่ (navigationShell.currentIndex) ส่วน Branch อื่นจะถูกซ่อนไว้ (ไม่ใช่ถูกทำลาย) ทำให้
+
+ความเเตกต่าง
+|  | ShellRoute | StatefulShellRoute.indexedStack |
+|---|---|---|
+| จำนวน Navigator | 1 ตัว ใช้ร่วมกันทุก Route | แยก Navigator ต่อ Branch |
+| State ของ Widget เมื่อสลับ Tab | ถูกทำลาย/สร้างใหม่ | ถูกเก็บไว้  |
+| ตำแหน่ง Scroll / Text ที่พิมพ์ | หายเมื่อสลับ Tab | คงอยู่เหมือนเดิม |
+| Navigation Stack ย่อยในแต่ละ Tab | ล้างทุกครั้ง | คงอยู่ ยังกลับไปหน้าที่เปิดค้างไว้ได้ |
+| ต้นทุนหน่วยความจำ | ต่ำกว่า | สูงกว่า  |
 ```
 3. ในโค้ด `DestinationCard` เหตุใดจึงใช้ `Expanded` ครอบ `Text` ชื่อ Destination ? จะเกิดอะไรขึ้นถ้าลบออก?
 ```text
-
+- Row ไม่บังคับความกว้างให้ Child แต่ละตัว ปกติ Text จะพยายามขยายความกว้างตามความยาวของข้อความ ถ้าชื่อ Destination ยาวมาก ข้อความจะขยายจนไปชนหรือดันราคาที่อยู่ด้านขวาให้ล้นออกนอกการ์ด เพราะ Row ไม่มีการจำกัดความกว้างของ Child ที่ไม่ได้ถูกห่อด้วย `Expanded`/`Flexible`
+- Expanded บังคับให้ Text รับพื้นที่ที่เหลือทั้งหมดของ Row หลังจากหักพื้นที่ของ Text ราคาแล้ว เท่ากับกำหนดขอบเขตความกว้างสูงสุด ให้ Text รู้ว่าตัวเองมีที่ได้แค่ไหน
+- เมื่อมีขอบเขตความกว้างชัดเจนแล้ว overflow TextOverflow.ellipsis ถึงจะทำงานได้ถูกต้อง ตัดข้อความแล้วใส่ ...`แทนที่จะดันเลย์เอาต์
 ```
 4. การส่งข้อมูลผ่าน `extra` ของ Go Router มีข้อจำกัดอะไรกรณี Deep Link / Web Refresh? และแก้ปัญหานี้ได้อย่างไร?
 ```text
+ข้อจำกัด
+  - extra เป็นการส่ง Object ผ่านหน่วยความจำ โดยตรง ระหว่างการ Navigate ครั้งนั้น ๆ มันไม่ได้ถูกเข้ารหัสหรือฝังไว้ใน URL แต่อย่างใด ปัญหาคือ
+    - Web Refresh เบราว์เซอร์จะโหลดหน้าเว็บใหม่ทั้งหมด ทำให้ Flutter App เริ่มต้นใหม่จาก main() และสร้าง Widget Tree ใหม่ทั้งหมด ค่า extra ที่เคยส่งไว้ในหน่วยความจำเดิม**จะหายไปกลายเป็น null เพราะไม่มีที่มาให้ Go Router สร้างมันขึ้นมาใหม่ได้
+    - Deep Link เมื่อผู้ใช้เปิดแอปจาก URL ตรง ๆ แอปจะเริ่มต้นที่ Route นั้นทันทีโดยไม่เคย Navigate ผ่าน หน้าก่อนหน้าเลย จึงไม่มีการเรียก context.pushNamed(..., extra: ...) เกิดขึ้นจริง ค่า extra จึงเป็น null ตั้งแต่แรกเสมอ
+    - ผลคือถ้าโค้ดพึ่งพา state.extra เพียงอย่างเดียวโดยไม่มี Fallback จะเกิด Error หรือหน้าจอแสดงข้อมูลว่างเปล่า
 
+- วิธีแก้ปัญหา
+  - ใช้ extra เป็นเพียง Optimization / Shortcut สำหรับกรณี Navigate ปกติภายในแอป แต่ห้ามพึ่งพาเพียงอย่างเดียว
+  - ฝังข้อมูล ID ที่จำเป็นไว้ใน Path Parameter ของ URL แทน เพราะ Path Parameter จะถูกเก็บอยู่ใน URL จริง ๆ ดังนั้นไม่ว่าจะ Refresh หรือเปิดผ่าน Deep Link ก็ยังอ่านค่าได้เสมอ
+  - เขียน Fallback Logic แบบ extra ?? หาใหม่จาก id
 ```
 5. วาด Navigation Hierarchy ของแอปนี้ (สามารถวาดบนกระดาษแล้วถ่ายรูปส่งได้)
 ```text
+appRouter
+│
+└── StatefulShellRoute.indexedStack
+    └── ScaffoldWithNavBar 
+        │
+        ├── Branch 0 — "หน้าหลัก"
+        │   └── GoRoute  path: '/'                       name: 'home'
+        │       └── HomeScreen
+        │           └── (กดการ์ด Featured) ──▶ pushNamed('destination-detail')
+        │
+        ├── Branch 1 — "สำรวจ"
+        │   └── GoRoute  path: '/explore'                name: 'explore'
+        │       └── ExploreScreen  (Responsive Grid)
+        │           └── GoRoute  path: 'destinations/:id'  name: 'destination-detail'
+        │               └── DestinationDetailScreen
+        │                   ├── กดหัวใจ ──▶ SnackBar
+        │                   └── กด "จองเลย" ──▶ AlertDialog ──▶ context.go('/')
+        │
+        ├── Branch 2 — "บันทึก"
+        │   └── GoRoute  path: '/saved'                  name: 'saved'
+        │       └── SavedScreen
+        │
+        └── Branch 3 — "โปรไฟล์"
+            └── GoRoute  path: '/profile'                name: 'profile'
+                └── ProfileScreen
 
+errorBuilder ──▶ แสดงเมื่อ URL ไม่ตรง Route ใดเลย "ไม่พบหน้าที่ต้องการ"
 ```
 ---
 
