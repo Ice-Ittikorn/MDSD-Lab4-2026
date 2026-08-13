@@ -1572,10 +1572,12 @@ GoRoute(
 บันทึกรูปผลการทดลอง
 
 <img width="768" height="764" alt="image" src="https://github.com/user-attachments/assets/ed813a24-0593-4741-8fb3-4672d770b9d8" />
-<img width="1088" height="414" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 21 36 24" src="https://github.com/user-attachments/assets/39761d08-b333-4009-bf4f-ad13d1fde0e7" />
-<img width="340" height="706" alt="image" src="https://github.com/user-attachments/assets/ee136434-727c-4c53-85d8-268c04e005ae" />
+
+<img width="808" height="775" alt="image" src="https://github.com/user-attachments/assets/2ad3f512-39ae-45ca-be18-a53a32bc9523" />
 
 <img width="724" height="763" alt="image" src="https://github.com/user-attachments/assets/22a13266-a907-47e5-8440-0ac05d371493" />
+
+<img width="1088" height="414" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 21 36 24" src="https://github.com/user-attachments/assets/39761d08-b333-4009-bf4f-ad13d1fde0e7" />
 <img width="1186" height="570" alt="image" src="https://github.com/user-attachments/assets/b8f3446f-c678-4242-8334-8db6dde3777d" />
 <img width="1234" height="624" alt="image" src="https://github.com/user-attachments/assets/2ff8638b-e2f5-4989-a42f-631b6dedaf29" />
 <img width="1173" height="440" alt="image" src="https://github.com/user-attachments/assets/774a8425-6aef-4d83-b477-b4a9e0ef9e66" />
