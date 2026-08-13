@@ -1559,15 +1559,7 @@ GoRoute(
 
 1. **เพิ่มปุ่มบันทึก :** เพิ่ม Icon รูปหัวใจบน `DestinationCard` หรือ `DestinationDetailScreen` (เลือกจุดใดจุดหนึ่งหรือทั้งสองจุด) ให้กดแล้วสลับสถานะ "บันทึกแล้ว / ยังไม่บันทึก" ได้ โดยไอคอนต้องเปลี่ยนรูปตามสถานะ (เช่น `Icons.favorite` ↔ `Icons.favorite_border`)
 
-<img width="768" height="764" alt="image" src="https://github.com/user-attachments/assets/ed813a24-0593-4741-8fb3-4672d770b9d8" />
-<img width="1088" height="414" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 21 36 24" src="https://github.com/user-attachments/assets/39761d08-b333-4009-bf4f-ad13d1fde0e7" />
-
-
 2. **จัดการ State ที่ใช้ร่วมกันข้ามหน้า:** ข้อมูลว่า Destination ไหนถูกบันทึกไว้บ้าง ต้องเข้าถึงได้จากทั้ง Explore Screen, Detail Screen และ Saved Screen พร้อมกัน (คำใบ้: ลองสร้าง Class ง่าย ๆ เก็บ `Set<String> savedIds` ไว้เป็นตัวแปร Global หรือส่งผ่าน Constructor — ยังไม่ต้องใช้ State Management Library ใด ๆ ในระดับนี้)
-<img width="724" height="763" alt="image" src="https://github.com/user-attachments/assets/22a13266-a907-47e5-8440-0ac05d371493" />
-<img width="1186" height="570" alt="image" src="https://github.com/user-attachments/assets/b8f3446f-c678-4242-8334-8db6dde3777d" />
-<img width="1234" height="624" alt="image" src="https://github.com/user-attachments/assets/2ff8638b-e2f5-4989-a42f-631b6dedaf29" />
-<img width="1173" height="440" alt="image" src="https://github.com/user-attachments/assets/774a8425-6aef-4d83-b477-b4a9e0ef9e66" />
 
 3. **แสดงผลใน Saved Screen (Objective 1 & 2):** ให้ `SavedScreen` แสดงรายการ Destination ที่ถูกบันทึกไว้จริง โดยใช้ `GridView` หรือ `ListView` (เลือกอย่างใดอย่างหนึ่ง) และต้องปรับจำนวนคอลัมน์/Layout ตามขนาดหน้าจอด้วย `LayoutBuilder` เหมือนที่ทำใน Explore Screen — ถ้ายังไม่มีรายการที่บันทึกไว้ ให้แสดง Empty State เหมือนเดิม
 
@@ -1578,9 +1570,16 @@ GoRoute(
 > 💡 **หลีกเลี่ยงการขอโค้ดทั้งไฟล์จาก AI** ให้ลองเขียนเองก่อน ถ้าติดจริง ๆ ให้ถามเป็นจุด ๆ ไป (เช่น "ทำไม setState ใน Widget อื่นไม่ทำให้ Saved Screen รีเฟรช") จะได้เรียนรู้มากกว่าการคัดลอกมาทั้งหมด
 
 บันทึกรูปผลการทดลอง
-```image
-บันทึกรูปโค้ด และรูปผลการทดลองที่นี่ 
-```
+
+<img width="768" height="764" alt="image" src="https://github.com/user-attachments/assets/ed813a24-0593-4741-8fb3-4672d770b9d8" />
+<img width="1088" height="414" alt="ภาพถ่ายหน้าจอ 2569-08-13 เวลา 21 36 24" src="https://github.com/user-attachments/assets/39761d08-b333-4009-bf4f-ad13d1fde0e7" />
+<img width="340" height="706" alt="image" src="https://github.com/user-attachments/assets/ee136434-727c-4c53-85d8-268c04e005ae" />
+
+<img width="724" height="763" alt="image" src="https://github.com/user-attachments/assets/22a13266-a907-47e5-8440-0ac05d371493" />
+<img width="1186" height="570" alt="image" src="https://github.com/user-attachments/assets/b8f3446f-c678-4242-8334-8db6dde3777d" />
+<img width="1234" height="624" alt="image" src="https://github.com/user-attachments/assets/2ff8638b-e2f5-4989-a42f-631b6dedaf29" />
+<img width="1173" height="440" alt="image" src="https://github.com/user-attachments/assets/774a8425-6aef-4d83-b477-b4a9e0ef9e66" />
+
 ---
 
 ## 📝 คำถามท้ายใบงาน
